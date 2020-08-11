@@ -13,17 +13,6 @@ So 150 is comprised of the prime factors: 5, 5, 5, 2.
 So this stands to reason that if we take the smallest prime factor of a large number and repeatedly factorize the number of times the other factor, 
 we will have a list of all of the prime factors that result from the original number, which we can then order from lowest to highest. 
 """
-# Function to determine if number is prime.
-def is_prime(num):
-    tmp_prime = None
-    if num > 1:
-        for i in range (2,num):
-            if (num % i) == 0:
-                tmp_prime = False
-        if tmp_prime == None:
-            tmp_prime = True
-    return tmp_prime
-
 # Function to return the smallest prime factor
 def smallest_prime_factor(num):
     for i in range (2, num):

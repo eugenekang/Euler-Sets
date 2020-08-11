@@ -1,4 +1,4 @@
-from euler_3 import is_prime
+from Tools.common_tools import is_prime
 
 """
 What is the 10 001st prime number?
