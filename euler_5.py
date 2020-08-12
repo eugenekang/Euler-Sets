@@ -17,7 +17,7 @@ def solve():
     i = 1
     while var == False:
         var = evenly_divisible(i)
-        ++i
+        ++i # this doesn't work
     return i
 
 if __name__ == "__main__":
