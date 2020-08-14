@@ -30,24 +30,98 @@ num_string = """
 
 # Function to turn a string of equal-length integers into a grid of user-specificed width. Outputs an array of arrays.
     #rawstring = the original string input
-    #grid_width = number of columns in grid
+    #grid_cols = number of columns in grid
     #int_size = # of digits in integers.
-def create_grid(rawstring, grid_width, int_size):
+def create_grid(rawstring, grid_cols, int_size):
     num_grid = ''.join(c for c in rawstring if c in digits) # strip all characters except for numerals
-    final_grid = []
+    grid_rows = len(num_grid)//int(int_size)//int(grid_cols)
+    final_table = []
     tmp_arr = []
 
-    for x in range(0, len(num_grid), int_size):
-        tmp_arr.append(num_grid[x] + num_grid[x + 1])
-        # (grid_width * int_size - int_size) is equivalent to saying "stop one short of max column length", but extensible.
-        if x > 0 and x % (grid_width * int_size - int_size) == 0:
-            final_grid.append(tmp_arr)
-            tmp_arr = []
+    # Creates arrays according to specified col size and integer length.
+    for i in range (0, len(num_grid), len(num_grid)//grid_rows): #step increment is equal to a whole "row"
+        for x in range (0 + i, (grid_cols * int_size) + i, int_size): #steps through the values in each "row"
+            tmp_arr.append(num_grid[x] + num_grid[x + 1])
+        final_table.append(tmp_arr)
+        tmp_arr = []
 
-    return final_grid
+    return final_table
 
+# Function to get the product of horizontally sequential integers in a table, without wrap, according to the number of factors to multiply by, given by user.
+    #table is the array of arrays input
+    #num_factr is the number of factors to use to create the product. 
+def get_row_prod(table, num_factr):
+    prod_array = []
+    for row in table:
+        for element in range(0, len(row)):
+            if element <= len(row) - num_factr:
+                temp_prod = 1
+                for i in range (0, num_factr): #Create products
+                    temp_prod *= int(row[element+i])
+                prod_array.append(temp_prod)
+    
+    return prod_array
+
+# Function to get the product of vertically sequential integers in a table, without wrap, according to the number of factors to multiply by, given by user.
+def get_col_prod(table, num_factr):
+    num_cols = len(table[0])
+    prod_array = []
+    for col in range (0, num_cols):
+        for row in range (0, len(table) - num_factr + 1):
+            temp_prod = 1
+            for i in range (0, num_factr): #Create products
+                temp_prod *= int(table[row + i][col])
+            prod_array.append(temp_prod)
+    
+    return prod_array
+
+# Function to get products going diagonally up to the right of the grid.
+def get_diag_asc_prod(table, num_factr):
+    # R4,C1&&R1,C4 to R20,C16&&R16,C20
+    prod_array = []
+    for row in range (0, len(table)):
+        tmp_prod = 1
+        for i in range(0, num_factr):
+            tmp_prod *= int(table[row-i][i])
+        prod_array.append(tmp_prod)
+
+    return prod_array
+
+# Function to get products going diagonally down to the right of the grid.
+def get_diag_desc_prod(grid):
+    # What if I created a new table from the diag?
+    pass
+
+# Function to determine the greatest value in a table.
+def find_greatest(list):
+    comparison = 0
+    for x in list:
+        if x > comparison:
+            comparison = x
+
+    return comparison
+    
 if __name__ == "__main__":
-    print(create_grid(num_string, 20, 2))
+    # Create the table
+    table = create_grid(num_string, 20, 2)
+    # Describe number of factors to create product
+    num_factr = 4
+    
+    dir_max = {} # Dict of directional max products: vert, horiz, and diag.
+    
+    # Get row products
+    dir_max['row'] = find_greatest(get_row_prod(table, num_factr))
+    # Get col products
+    dir_max['col'] = find_greatest(get_col_prod(table, num_factr))
+    # Get diag_asc products
+    print(get_diag_asc_prod(table, num_factr))
+    dir_max['diag_asc'] = 0
+    # Get diag_desc products
+    dir_max['diag_desc'] = 0
+
+    print(dir_max)
+
+
 
 # Read into separate rows?
 # Make an array of arrays?
