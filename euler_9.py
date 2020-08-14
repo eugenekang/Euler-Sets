@@ -1,8 +1,10 @@
-import math
 """
 There exists exactly one Pythagorean triplet for which a + b + c = 1000.
 Find the product abc.
 """
+
+import math
+
 # Fucntion to create a pythagorean triplet from the following criteria:
 #   Reference: https://www.chilimath.com/lessons/geometry-lessons/generating-pythagorean-triples/
 #   Where m > n

@@ -1,10 +1,9 @@
-from Tools.common_tools import is_prime
-
 """
 What is the 10 001st prime number?
 
 NOT DONE
 """
+from Tools.common_tools import is_prime
 
 def count_to_prime(top):
     y = 0 # Counter

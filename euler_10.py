@@ -1,9 +1,11 @@
-from Tools.common_tools import is_prime
 """
 Find the sum of all the primes below two million.
 
 Currently very slow if the start value is greater than 20000
 """
+
+from Tools.common_tools import is_prime
+
 def generate_primes_in_range(start, end):
     primes = []
     primes_in_range = []
