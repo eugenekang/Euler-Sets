@@ -77,20 +77,29 @@ def get_col_prod(table, num_factr):
 
 # Function to get products going diagonally up to the right of the grid.
 def get_diag_asc_prod(table, num_factr):
-    # R4,C1&&R1,C4 to R20,C16&&R16,C20
     prod_array = []
-    for row in range (0, len(table)):
-        tmp_prod = 1
-        for i in range(0, num_factr):
-            tmp_prod *= int(table[row-i][i])
-        prod_array.append(tmp_prod)
+    
+    for row in range(num_factr - 1,len(table)): # Search each "row" as an array in table, bounds from row 3 to row 19.
+        for col in range(0, len(table[row]) + 1 - num_factr): # Search each "col" as an element in that array, bounds from row 0 to row 17
+            tmp_prod = 1
+            for x in range(0, num_factr): # Multiply the products together
+                tmp_prod *= int(table[row - x][col + x])
+            prod_array.append(tmp_prod)
 
     return prod_array
 
 # Function to get products going diagonally down to the right of the grid.
-def get_diag_desc_prod(grid):
-    # What if I created a new table from the diag?
-    pass
+def get_diag_desc_prod(table, num_factr):
+    prod_array = []
+
+    for row in range(0, len(table) - num_factr + 1): # Search each row as an array, bounds from row 0 to row 16.
+        for col in range(0, len(table[row]) + 1 - num_factr): # Search each "col" as an element in that array, bounds from row 0 to row 17
+            tmp_prod = 1
+            for x in range (0, num_factr):
+                tmp_prod *= int(table[row + x][col + x])
+            prod_array.append(tmp_prod)
+
+    return prod_array
 
 # Function to determine the greatest value in a table.
 def find_greatest(list):
@@ -100,13 +109,8 @@ def find_greatest(list):
             comparison = x
 
     return comparison
-    
-if __name__ == "__main__":
-    # Create the table
-    table = create_grid(num_string, 20, 2)
-    # Describe number of factors to create product
-    num_factr = 4
-    
+
+def compute(table, num_factr):
     dir_max = {} # Dict of directional max products: vert, horiz, and diag.
     
     # Get row products
@@ -114,20 +118,21 @@ if __name__ == "__main__":
     # Get col products
     dir_max['col'] = find_greatest(get_col_prod(table, num_factr))
     # Get diag_asc products
-    print(get_diag_asc_prod(table, num_factr))
-    dir_max['diag_asc'] = 0
+    dir_max['diag_asc'] = find_greatest(get_diag_asc_prod(table, num_factr))
     # Get diag_desc products
-    dir_max['diag_desc'] = 0
+    dir_max['diag_desc'] = find_greatest(get_diag_desc_prod(table, num_factr))
 
-    print(dir_max)
+    return dir_max
 
+if __name__ == "__main__":
+    # Create the table
+    table = create_grid(num_string, 20, 2)
+    # Describe number of factors to create product
+    num_factr = 4
+    
+    # Compute solution
+    dir_max = compute(table, num_factr)
 
-
-# Read into separate rows?
-# Make an array of arrays?
-    # num_array[i][j]
-    # Find vert = [i+1-4][j]
-    # Find horiz = [i][j+1-4]
-    # find diag(down right) = ([i][j])+1-4
-    # Find diag(up right) = ([i+1-4][j-1-4])
-# Import numpy?
+    # Determine the greatest product value overall.
+    # Return information to user
+    print("The greatest value overall was: " + str(find_greatest(dir_max.values()))+ ".")
