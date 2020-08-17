@@ -2,7 +2,7 @@
 What is the greatest product of four adjacent numbers in the same direction (up, down, left, right, or diagonally) in the 20×20 grid?
 """
 
-from string import digits
+from Tools.common_tools import create_grid
 
 # String to operate on.
 num_string = """
@@ -27,26 +27,6 @@ num_string = """
 20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54
 01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48
 """
-
-# Function to turn a string of equal-length integers into a grid of user-specificed width. Outputs an array of arrays.
-    #rawstring = the original string input
-    #grid_cols = number of columns in grid
-    #int_size = # of digits in integers.
-def create_grid(rawstring, grid_cols, int_size):
-    num_grid = ''.join(c for c in rawstring if c in digits) # strip all characters except for numerals
-    grid_rows = len(num_grid)//int(int_size)//int(grid_cols)
-    final_table = []
-    tmp_arr = []
-
-    # Creates arrays according to specified col size and integer length.
-    for i in range (0, len(num_grid), len(num_grid)//grid_rows): #step increment is equal to a whole "row"
-        for x in range (0 + i, (grid_cols * int_size) + i, int_size): #steps through the values in each "row"
-            tmp_arr.append(num_grid[x] + num_grid[x + 1])
-        final_table.append(tmp_arr)
-        tmp_arr = []
-
-    return final_table
-
 # Function to get the product of horizontally sequential integers in a table, without wrap, according to the number of factors to multiply by, given by user.
     #table is the array of arrays input
     #num_factr is the number of factors to use to create the product. 
