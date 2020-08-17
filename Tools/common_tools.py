@@ -1,14 +1,14 @@
 from math import *
 # Function to determine if number is prime.
+# A nonprime number (n) will have at least one factor, not equal to one, which is within the range between (1, sqrt(n)). 
+# Therefore a prime number will have no factors between (1, sqrt(n))
 def is_prime(num):
     if num < 1: 
         return False
-    elif num <= 3:
-        return True
     elif num % 2 == 0:
         return False
     else:
-        for i in range (3,num):
+        for i in range (2,int(sqrt(num)) + 1): # Include square root of num in range bc perfect squares exist and are nonprime
             if (num % i) == 0:
                 return False
         return True
@@ -22,37 +22,10 @@ def fib_gen(n):
         a, b = b, a+b
     return a,b
 
-# Function to generate prime numbers up to a specified limit. Function yields a generator list.
+#
 def generate_primes(limit):
-    x = 2 # Set counter to 2
+    x = 1
     while x < limit:
-        prime = True
-        for y in range(2, x):
-            if x % y == 0:
-                prime = False
-                break
-        if prime:
+        if (is_prime(x)) == True:
             yield x
-        x += 1 
-
-"""
-#WHY DOES THIS WORK SO GOOD?
-# Returns a list of True and False indicating whether each number is prime.
-# For 0 <= i <= n, result[i] is True if i is a prime number, False otherwise.
-def list_primality(n):
-	# Sieve of Eratosthenes
-	result = [True] * (n + 1)
-	result[0] = result[1] = False
-	for i in range(int(sqrt(n)) + 1):
-		if result[i]:
-			for j in range(i * i, len(result), i):
-				result[j] = False
-	return result
-
-# Returns all the prime numbers less than or equal to n, in ascending order.
-# For example: listPrimes(97) = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, ..., 83, 89, 97].
-def list_primes(n):
-	return [i for (i, isprime) in enumerate(list_primality(n)) if isprime]
-
-print(list_primes(200000))
-"""
+        x += 1
