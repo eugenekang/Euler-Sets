@@ -26,7 +26,7 @@ def fib_gen(n):
         a, b = b, a+b
     return a,b
 
-#
+# Function to generate prime numbers
 def generate_primes(limit):
     x = 1
     while x < limit:
