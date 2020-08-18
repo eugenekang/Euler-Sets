@@ -43,12 +43,28 @@ def create_grid(rawstring, grid_cols, int_size):
     grid_rows = len(num_grid)//int(int_size)//int(grid_cols)
     final_table = []
     tmp_arr = []
-
+    
     # Creates arrays according to specified col size and integer length.
     for i in range (0, len(num_grid), len(num_grid)//grid_rows): #step increment is equal to a whole "row"
         for x in range (0 + i, (grid_cols * int_size) + i, int_size): #steps through the values in each "row"
             tmp_arr.append(num_grid[x] + num_grid[x + 1])
         final_table.append(tmp_arr)
         tmp_arr = []
+
+    return final_table
+
+# Duplicated for number 13 to function, will have to resolve redundancy with prev function.
+def create_grid_2(rawstring, grid_cols, int_size):
+    num_grid = ''.join(c for c in rawstring if c in digits) # strip all characters except for numerals
+    grid_rows = len(num_grid)//int(int_size)//int(grid_cols)
+    final_table = []
+    tmp_arr = []
+    
+    for i in range (0, len(num_grid), len(num_grid)//grid_rows): #step increment is equal to a whole "row"
+        for x in range (0 + i, (grid_cols * int_size) + i, int_size): #steps through the values in each "row"
+            tmp_element = ""
+            for k in range (0, int_size):
+                tmp_element += num_grid[x+k]
+            final_table.append(tmp_element)
 
     return final_table

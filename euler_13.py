@@ -1,4 +1,8 @@
-from Tools.common_tools import create_grid
+"""
+Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.
+"""
+
+from Tools.common_tools import create_grid_2
 
 int_in = """37107287533902102798797998220837590246510135740250
 46376937677490009712648124896970078050417018260538
@@ -101,4 +105,10 @@ int_in = """37107287533902102798797998220837590246510135740250
 20849603980134001723930671666823555245252804609722
 53503534226472524250874054075591789781264330331690"""
 
-print(create_grid(int_in, 1, 50))
+if __name__ == "__main__":
+    table = create_grid_2(int_in, 1, 50)
+    sum = 0
+    for row in table:
+        sum += int(row)
+    print("The value of the sum of all 100 numbers is: " + str(sum))
+    print("The first ten digits of the sum are: " + str(sum)[0:10])
