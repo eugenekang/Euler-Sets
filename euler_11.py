@@ -2,7 +2,7 @@
 What is the greatest product of four adjacent numbers in the same direction (up, down, left, right, or diagonally) in the 20×20 grid?
 """
 
-from Tools.common_tools import create_grid
+from Tools.common_tools import create_grid, extract_q_text, create_table
 
 # String to operate on.
 num_string = """
@@ -106,7 +106,8 @@ def compute(table, num_factr):
 
 if __name__ == "__main__":
     # Create the table
-    table = create_grid(num_string, 20, 2)
+    table = create_table(extract_q_text("raw_input.txt", "E11"), 2)
+    
     # Describe number of factors to create product
     num_factr = 4
     
@@ -116,3 +117,4 @@ if __name__ == "__main__":
     # Determine the greatest product value overall.
     # Return information to user
     print("The greatest value overall was: " + str(find_greatest(dir_max.values()))+ ".")
+    

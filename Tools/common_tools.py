@@ -34,37 +34,30 @@ def generate_primes(limit):
             yield x
         x += 1
 
-# Function to turn a string of equal-length integers into a grid of user-specificed width. Outputs an array of arrays.
-    #rawstring = the original string input
-    #grid_cols = number of columns in grid
-    #int_size = # of digits in integers.
-def create_grid(rawstring, grid_cols, int_size):
-    num_grid = ''.join(c for c in rawstring if c in digits) # strip all characters except for numerals
-    grid_rows = len(num_grid)//int(int_size)//int(grid_cols)
+# Function to create a grid from a list of integers
+    #raw_input specifies the text input
+    # int size specifies how many digits each integer in each row is.
+def create_table(raw_input, int_size):
     final_table = []
     tmp_arr = []
-    
-    # Creates arrays according to specified col size and integer length.
-    for i in range (0, len(num_grid), len(num_grid)//grid_rows): #step increment is equal to a whole "row"
-        for x in range (0 + i, (grid_cols * int_size) + i, int_size): #steps through the values in each "row"
-            tmp_arr.append(num_grid[x] + num_grid[x + 1])
+
+    for x in range(0, len(raw_input)):
+        for y in range(0, len(raw_input[x]), int_size):
+            tmp_arr.append(raw_input[x][y] + raw_input[x][y+1])
         final_table.append(tmp_arr)
         tmp_arr = []
 
     return final_table
 
-# Duplicated for number 13 to function, will have to resolve redundancy with prev function.
-def create_grid_2(rawstring, grid_cols, int_size):
-    num_grid = ''.join(c for c in rawstring if c in digits) # strip all characters except for numerals
-    grid_rows = len(num_grid)//int(int_size)//int(grid_cols)
-    final_table = []
-    tmp_arr = []
-    
-    for i in range (0, len(num_grid), len(num_grid)//grid_rows): #step increment is equal to a whole "row"
-        for x in range (0 + i, (grid_cols * int_size) + i, int_size): #steps through the values in each "row"
-            tmp_element = ""
-            for k in range (0, int_size):
-                tmp_element += num_grid[x+k]
-            final_table.append(tmp_element)
+# Function to extract the question text of a file and clean it. 
+    # var q is the question related to the relevant text in format "E#" (ie. "E10")
+    # Note that if there isn't a line for EOF, then the search for fi.index(q + ": END\n") will return an error if searching for the last E# in sequence.
+    # Returns a list of values with numbers grouped into rows with no non-numeric characters and no whitespace.
+def extract_q_text(filename, q):
+    fi = open(filename,"r").readlines() #open textfile
+    cleaned_fi = [] #create array for lines
 
-    return final_table
+    for line in range (fi.index(q + ": START\n") + 1, fi.index(q + ": END\n")):
+        cleaned_fi.append(fi[line].strip().replace(" ","")) #append lines to new array and strip non-numerics and whitespace
+
+    return cleaned_fi
