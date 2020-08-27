@@ -61,3 +61,10 @@ def extract_q_text(filename, q):
         cleaned_fi.append(fi[line].strip().replace(" ","")) #append lines to new array and strip non-numerics and whitespace
 
     return cleaned_fi
+
+# Function to take a list of integers and return the sum of all integers in the list.
+def get_sum_list(list):
+    list_sum = 0
+    for n in list:
+        list_sum += n
+    return list_sum
