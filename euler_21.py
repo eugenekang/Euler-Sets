@@ -4,14 +4,7 @@ Let d(n) be defined as the sum of proper divisors of n (numbers less than n whic
 If d(a) = b and d(b) = a, where a ≠ b, then a and b are an amicable pair and each of a and b are called amicable numbers.
 Evaluate the sum of all the amicable numbers under 10000.
 """
-# Fucntion get the proper divisors for a given number n. Returns a list of the divisors.
-def get_proper_divisors(n):
-    divisors = []
-    for x in range(1, n):
-        if n % x == 0:
-            divisors.append(x)
-    
-    return divisors 
+from Tools.common_tools import get_proper_divisors
 
 # Returns the sum of a list of integers.
 def sum_list(n):

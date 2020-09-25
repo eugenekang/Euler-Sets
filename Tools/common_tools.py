@@ -67,4 +67,14 @@ def get_sum_list(list):
     list_sum = 0
     for n in list:
         list_sum += n
+    
     return list_sum
+
+# Function get the proper divisors for a given number n. Returns a list of the divisors.
+def get_proper_divisors(n):
+    divisors = []
+    for x in range(1, n):
+        if n % x == 0:
+            divisors.append(x)
+    
+    return divisors 
